@@ -4,4 +4,4 @@
  Microsoft C#   
  .NET SDK | Runtime Environment  
  ## How to run
- The program is a simple C# console application. It can be launched by browsing to the directory in the command prompt, and using the command "dotnet run"
+ The program is a simple C# console application. It can be launched by browsing to the "Good_Match_Assessment" directory in the command prompt, and using the command "dotnet run"
