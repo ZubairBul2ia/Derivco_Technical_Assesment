@@ -1,0 +1,1 @@
+Time to sort the matched results: 21 ms

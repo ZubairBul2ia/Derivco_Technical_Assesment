@@ -156,12 +156,63 @@ namespace Good_Match_Assessment
         static void Main(string[] args)
         {
             
-            string name1 = "Jack" ;
-            string name2 = "Jill" ;
-            string OutputString = MatchingAlgorithm(name1, name2); // this is the algorithm that matches two names as required in path 1
+            Console.WriteLine("Welcome to the Tennis Good Match Assessment algorithm.\nPlease enter names when prompted and only use alphabetic characters.");
+            // Read two names from the console as input, and ensure they are only alphabetic
+            Console.WriteLine("Enter first name: \n");
+            string userName1 = Console.ReadLine();
+            if (userName1.All(char.IsLetter))
+            {
+                Console.WriteLine("First name is: " + userName1 + "\n");
+            }
+            else
+            {
+                while( userName1.All(char.IsLetter) != true )
+                {
+                    Console.WriteLine("Please only use alphabetic characters");
+                    Console.WriteLine("Enter first name: \n");
+                    userName1 = Console.ReadLine();
+                }
+                
+            }
+            
+            Console.WriteLine("Enter second name: \n");
+            string userName2 = Console.ReadLine();
+            if (userName2.All(char.IsLetter))
+            {
+                Console.WriteLine("Second name is: " + userName2 + "\n");
+            }
+            else
+            {
+                while( userName2.All(char.IsLetter) != true )
+                {
+                    Console.WriteLine("Please only use alphabetic characters");
+                    Console.WriteLine("Enter second name: \n");
+                    userName2 = Console.ReadLine();
+                }
+                
+            }
+
+            //timer to time how long the algorithm itelf runs
+            var watch = new System.Diagnostics.Stopwatch();
+            
+            watch.Start();
+
+
+            //string name1 = "Jack" ;
+            //string name2 = "Jill" ;
+
+            /* Strings name1 and name2 above are from the example, and were used in the algoithm to test it.
+               You can use these parameters as arguments to test any custom names */
+            string OutputString = MatchingAlgorithm(userName1, userName2); // this is the algorithm that matches two names as required in path 1
+
+            watch.Stop();
+
             Console.WriteLine("Output for Part 1; \n");
-            Console.WriteLine(OutputString ); // outputs the expected result of the matching algorithm for part 1, uncomment to  
-            Console.WriteLine();
+            Console.WriteLine(OutputString ); // outputs the expected result of the matching algorithm for part 1,  
+
+            Console.WriteLine($"Time to match {userName1} and {userName2}: {watch.ElapsedMilliseconds} ms\n");
+            //File.WriteAllLines("log_time_part1.txt", $"Time to match {userName1} and {userName2}: {watch.ElapsedMilliseconds} ms" );
+            File.WriteAllText("log_time_part1.txt", $"Time to match {userName1} and {userName2}: {watch.ElapsedMilliseconds} ms\n" );
 
             List<string> listMales = new List<string>();
             List<string> listFemales = new List<string>();
@@ -213,11 +264,19 @@ namespace Good_Match_Assessment
             //Console.WriteLine(listMales[0]);
             //Console.WriteLine(listMales.Count);
             //Console.WriteLine(String.Join(",",listMales));
+
+            watch.Start();
             
             Tuple<string,int>[,] MyResultsArr = new Tuple<string,int>[listMales.Count, listFemales.Count]; 
             MyResultsArr = MatchCSV(listMales,listFemales);
 
-            //now we have the results, we have to sort them and then save to a txt file
+            watch.Stop();
+            Console.WriteLine($"Time to match all possible names from CSV file: {watch.ElapsedMilliseconds} ms\n");
+            File.WriteAllText("log_time_match_part2.txt", $"Time to match all possible names from CSV file: {watch.ElapsedMilliseconds} ms\n" );
+
+            watch.Start();
+            // now we have the results, we have to sort them and then save to a txt file
+            // the sorting could be improved by doing it in-place to save on memory, and by sorting/ordering it after it has been matched 
             List<string> ResStr = new List<string>();
             List<int> ResInt = new List<int>();
 
@@ -239,6 +298,10 @@ namespace Good_Match_Assessment
 
             //now  we reverse the list so it is in descending order
             ResStr.Reverse();
+
+            watch.Stop();
+            Console.WriteLine($"Time to sort the matched results: {watch.ElapsedMilliseconds} ms\n");
+            File.WriteAllText("log_time_sort_part2.txt", $"Time to sort the matched results: {watch.ElapsedMilliseconds} ms\n" );
 
             File.WriteAllLines("output.txt", ResStr.Select(x => string.Join(",", x)));
             
