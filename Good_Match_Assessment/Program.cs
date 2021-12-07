@@ -231,8 +231,9 @@ namespace Good_Match_Assessment
                     {
                         var line = reader.ReadLine();
                         var values = line.Split(',');
+                        values[1] = values[1].Replace(" ", String.Empty);
                         
-                        if (values[1] == " m"){
+                        if (values[1] == "m"){
                             listMales.Add(values[0]);
                             //Console.WriteLine("yay this guy was added" );
                         }
